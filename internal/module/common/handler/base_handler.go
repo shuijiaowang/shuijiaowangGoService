@@ -2,6 +2,7 @@
 package handler
 
 import (
+	common "SService/internal/module/common/model"
 	"SService/pkg/util"
 
 	"github.com/gin-gonic/gin"
@@ -34,6 +35,18 @@ func (h *BaseHandler) GetUserID(c *gin.Context) int {
 	id, ok := userID.(int) //断言用户ID类型
 	if !ok {
 		panic(util.NewAppError(401, "无效的用户ID类型", nil))
+	}
+	return id
+}
+func (h *BaseHandler) GetUserUUID(c *gin.Context) common.UUID {
+	userID, exists := c.Get("userUUID")
+	if !exists {
+		panic(util.NewAppError(401, "未获取到用户信息", nil))
+	}
+
+	id, ok := userID.(common.UUID) //断言用户ID类型
+	if !ok {
+		panic(util.NewAppError(401, "无效的用户UUID类型", nil))
 	}
 	return id
 }
