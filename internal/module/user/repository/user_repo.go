@@ -3,6 +3,7 @@ package repository
 import (
 	"SService/internal/module/user/model"
 	"SService/pkg/database"
+	"fmt"
 )
 
 // 用户仓库结构体
@@ -19,6 +20,7 @@ func (r *UserRepository) FindUserByName(name string) (*model.User, error) {
 // 创建用户
 func (r *UserRepository) CreateUser(user *model.User) error {
 	// Create 插入记录
+	fmt.Printf("UUID类型: %T, 长度: %d字节\n", user.UserUUID, len(user.UserUUID))
 	result := database.DB.Create(user)
 	return result.Error
 }

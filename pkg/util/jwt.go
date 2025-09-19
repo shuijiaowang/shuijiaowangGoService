@@ -1,6 +1,7 @@
 package util
 
 import (
+	common "SService/internal/module/common/model"
 	"errors"
 	"time"
 
@@ -12,19 +13,21 @@ var jwtSecret = []byte("your-secret-key")
 
 // 自定义claims
 type Claims struct {
-	UserID   int    `json:"user_id"`
-	Username string `json:"username"`
+	UserID   int         `json:"user_id"`
+	Username string      `json:"username"`
+	UserUUID common.UUID `json:"user_uuid"`
 	jwt.RegisteredClaims
 }
 
 // 生成JWT令牌
-func GenerateToken(userID int, username string) (string, error) {
+func GenerateToken(userID int, username string, userUUID common.UUID) (string, error) {
 	// 设置过期时间（例如24小时）
 	expirationTime := time.Now().Add(240 * time.Hour)
 
 	claims := &Claims{
 		UserID:   userID,
 		Username: username,
+		UserUUID: userUUID,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expirationTime),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
