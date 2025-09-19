@@ -1,0 +1,79 @@
+-- 备忘录表
+CREATE TABLE `memo` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `user_uuid` binary(16) NOT NULL COMMENT '用户UUID',
+  `content` text NOT NULL COMMENT '备忘录内容',
+  `is_complete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否完成(0:未完成,1:已完成)',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted_at` timestamp NULL DEFAULT NULL COMMENT '删除时间(软删除标志)',
+  PRIMARY KEY (`id`),
+  KEY `idx_user_uuid` (`user_uuid`),
+  KEY `idx_deleted_at` (`deleted_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='备忘录表';
+
+-- 任务表(支持父子任务)
+CREATE TABLE `task` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `user_uuid` binary(16) NOT NULL COMMENT '用户UUID',
+  `title` varchar(100) NOT NULL COMMENT '任务名称',
+  `parent_task_id` int NULL COMMENT '父任务ID(自关联)',
+  `is_completed` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否完成',
+  `start_time` datetime NULL COMMENT '开始时间',
+  `end_time` datetime NULL COMMENT '结束时间',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted_at` timestamp NULL DEFAULT NULL COMMENT '删除时间(软删除标志)',
+  PRIMARY KEY (`id`),
+  KEY `idx_user_uuid` (`user_uuid`),
+  KEY `idx_parent_task` (`parent_task_id`),
+  KEY `idx_deleted_at` (`deleted_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='任务表';
+
+-- 五分钟任务表
+CREATE TABLE `five_minute_task` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `user_uuid` binary(16) NOT NULL COMMENT '用户UUID',
+  `task_id` int unsigned NOT NULL COMMENT '关联任务ID',
+  `description` text NOT NULL COMMENT '任务描述',
+  `is_completed` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否完成',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted_at` timestamp NULL DEFAULT NULL COMMENT '删除时间(软删除标志)',
+  PRIMARY KEY (`id`),
+  KEY `idx_user_uuid` (`user_uuid`),
+  KEY `idx_task_id` (`task_id`),
+  KEY `idx_deleted_at` (`deleted_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='五分钟任务表';
+
+-- 习惯表
+CREATE TABLE `habit` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `user_uuid` binary(16) NOT NULL COMMENT '用户UUID',
+  `title` varchar(100) NOT NULL COMMENT '习惯名称',
+  `interval_value` int NOT NULL COMMENT '时间间隔(单位:天)',
+  `start_date` date NOT NULL COMMENT '开始日期',
+  `end_date` date NULL COMMENT '结束日期',
+  `is_active` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否激活',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted_at` timestamp NULL DEFAULT NULL COMMENT '删除时间(软删除标志)',
+  PRIMARY KEY (`id`),
+  KEY `idx_user_uuid` (`user_uuid`),
+  KEY `idx_deleted_at` (`deleted_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='习惯表';
+
+-- 习惯打卡表
+CREATE TABLE `habit_checkins` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `user_uuid` binary(16) NOT NULL COMMENT '用户UUID',
+  `habit_id` int unsigned NOT NULL COMMENT '关联习惯ID',
+  `checkin_time` datetime NOT NULL COMMENT '打卡时间',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted_at` timestamp NULL DEFAULT NULL COMMENT '删除时间(软删除标志)',
+  PRIMARY KEY (`id`),
+  KEY `idx_user_uuid` (`user_uuid`),
+  KEY `idx_habit_id` (`habit_id`),
+  KEY `idx_deleted_at` (`deleted_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='习惯打卡表';
