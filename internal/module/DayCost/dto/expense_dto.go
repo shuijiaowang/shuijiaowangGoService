@@ -17,7 +17,7 @@ type ExpenseDto struct {
 	ExpenseDate     common.JSONDate `json:"expense_date" binding:"required" time_format:"2006-01-02"` // 消费日期（必填）
 	Category        int8            `json:"category" binding:"required,gte=0,lte=9"`                  // 分类（必填，0-9范围内）
 	IsExtended      bool            `json:"is_extended"`
-	TransactionType int8            `json:"transaction_type" binding:"required,gte=0,lte=1`
+	TransactionType int8            `json:"transaction_type" binding:"required,gte=0,lte=1"`
 }
 
 //这俩就没必要了
