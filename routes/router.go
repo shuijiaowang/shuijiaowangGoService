@@ -2,6 +2,7 @@ package routes
 
 import (
 	handler3 "SService/internal/module/DayCost/handler"
+	"SService/internal/module/ToDoList/handler"
 	handler2 "SService/internal/module/user/handler"
 	"SService/pkg/middleware" // 导入中间件包
 
@@ -18,6 +19,7 @@ func SetupRouter() *gin.Engine {
 	authHandler := handler2.NewAuthHandler()
 	expenseHandler := handler3.NewExpenseHandler()
 	expenseExtHandler := handler3.NewExpenseExtHandler()
+	memoHandler := handler.NewMemoHandler()
 	// 用户路由
 	userGroup := r.Group("/api/user")
 	{
@@ -55,6 +57,12 @@ func SetupRouter() *gin.Engine {
 			//expenseExtGroup.DELETE("/:id", expenseExtHandler.DeleteExpenseExt)      // 删除
 			//expenseExtGroup.PUT("/recover/:id", expenseExtHandler.RecoverExpenseExt)
 			//expenseExtGroup.GET("/statistic", expenseExtHandler.Statistic)
+		}
+	}
+	{
+		memoGroup := apiGroup.Group("/memos")
+		{
+			memoGroup.POST("/", memoHandler.AddMemo)
 		}
 	}
 
