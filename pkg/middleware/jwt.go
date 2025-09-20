@@ -38,6 +38,7 @@ func JWTInterceptor() gin.HandlerFunc {
 		// 将用户ID存入上下文
 		c.Set("userID", claims.UserID)
 		c.Set("username", claims.Username)
+		c.Set("userUUID", claims.UserUUID)
 		c.Next()
 	}
 }
