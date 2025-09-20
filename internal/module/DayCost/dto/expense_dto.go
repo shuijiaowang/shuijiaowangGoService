@@ -3,6 +3,7 @@ package dto
 
 import (
 	"SService/internal/module/DayCost/model"
+	dto2 "SService/internal/module/common/dto"
 	common "SService/internal/module/common/model"
 )
 
@@ -44,8 +45,8 @@ type ExpenseQuery struct {
 
 // 消费列表查询请求（包含条件+分页）
 type ExpensePagesQuery struct {
-	ExpenseQuery      // 嵌入业务查询条件
-	PaginationRequest // 嵌入分页参数
+	ExpenseQuery           // 嵌入业务查询条件
+	dto2.PaginationRequest // 嵌入分页参数
 }
 
 type ExpenseDay struct {

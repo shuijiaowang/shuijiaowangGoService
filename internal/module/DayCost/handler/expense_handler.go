@@ -4,6 +4,7 @@ import (
 	dto2 "SService/internal/module/DayCost/dto"
 	"SService/internal/module/DayCost/model"
 	"SService/internal/module/DayCost/service"
+	"SService/internal/module/common/dto"
 	handler2 "SService/internal/module/common/handler"
 	"SService/pkg/util"
 	"fmt"
@@ -99,7 +100,7 @@ func (h *ExpenseHandler) ListExpenseByCondition(c *gin.Context) {
 		return
 	}
 	// 包装分页响应
-	resp := dto2.PaginationResponse{
+	resp := dto.PaginationResponse{
 		Total:    total,        //总页数
 		Page:     req.Page,     //查询页码，第几页
 		PageSize: req.PageSize, //每页条数

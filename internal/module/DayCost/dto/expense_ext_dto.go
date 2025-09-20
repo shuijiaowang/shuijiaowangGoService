@@ -1,4 +1,4 @@
-package repository
+package dto
 
 import (
 	common "SService/internal/module/common/model"

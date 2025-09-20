@@ -1,8 +1,8 @@
 package handler
 
 import (
+	"SService/internal/module/DayCost/dto"
 	"SService/internal/module/DayCost/model"
-	"SService/internal/module/DayCost/repository"
 	"SService/internal/module/DayCost/service"
 	"SService/pkg/util"
 	"strconv"
@@ -24,7 +24,7 @@ func NewExpenseExtHandler() *ExpenseExtHandler {
 }
 func (h *ExpenseExtHandler) AddExpenseExt(c *gin.Context) {
 	userID := h.GetUserID(c) //获取用户id
-	var req repository.ExpenseExtDto
+	var req dto.ExpenseExtDto
 	h.Bind(c, &req)
 	expenseExt := &model.ExpenseExt{
 		ExpenseID:        req.ExpenseID,
