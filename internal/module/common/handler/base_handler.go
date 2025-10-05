@@ -19,11 +19,13 @@ func NewBaseHandler() *BaseHandler {
 
 // Bind 通用参数绑定方法，绑定失败时抛出自定义错误（由全局中间件处理）
 func (h *BaseHandler) Bind(c *gin.Context, req interface{}) {
-	if err := c.ShouldBindJSON(req); err != nil {
+	if err := c.ShouldBind(req); err != nil {
 		panic(util.NewAppError(400, "无效的请求格式: "+err.Error(), err))
 	}
 	// 绑定成功时无返回值，直接继续执行
 }
+
+// 有一种自动判断的绑定方法来着？
 
 // GetUserID 从上下文获取用户ID，封装重复的断言和错误处理
 func (h *BaseHandler) GetUserID(c *gin.Context) int {

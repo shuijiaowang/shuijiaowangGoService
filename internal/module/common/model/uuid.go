@@ -8,6 +8,12 @@ import (
 	"github.com/google/uuid"
 )
 
+/*
+为什么创建自定义 UUID 类型？
+因为gorm默认不支持 UUID 类型，会把uuid二进制转为36位字符串存储到mysql数据库。
+自定义UUID,实现 driver.Valuer 接口（Go -> 数据库）和 sql.Scanner 接口（数据库 -> Go）
+*/
+
 // UUID 自定义 UUID 类型，嵌入 google/uuid.UUID
 type UUID uuid.UUID
 

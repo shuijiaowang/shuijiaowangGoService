@@ -60,9 +60,10 @@ func SetupRouter() *gin.Engine {
 		}
 	}
 	{
-		memoGroup := apiGroup.Group("/memos")
+		memoGroup := apiGroup.Group("/memo")
 		{
-			memoGroup.POST("/", memoHandler.AddMemo)
+			memoGroup.POST("/", memoHandler.CreateMemo)
+			memoGroup.GET("/", memoHandler.GetMemoList)
 		}
 	}
 

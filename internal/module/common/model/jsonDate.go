@@ -7,6 +7,10 @@ import (
 	"time"
 )
 
+/*
+自定义日期类型（只包含年月日）
+*/
+
 // JSONDate 自定义日期类型（只包含年月日）
 type JSONDate time.Time
 

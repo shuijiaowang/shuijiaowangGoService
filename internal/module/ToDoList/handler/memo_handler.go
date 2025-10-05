@@ -17,16 +17,29 @@ func NewMemoHandler() *MemoHandler {
 	return &MemoHandler{}
 }
 
-func (h *MemoHandler) AddMemo(c *gin.Context) {
+// 添加,Post请求，
+func (h *MemoHandler) CreateMemo(c *gin.Context) {
 	userUUID := h.GetUserUUID(c)
 	var req dto.MemoCreateDTO
 	h.Bind(c, &req)
-
 	req.UserUUID = userUUID
-	memo, err := service.AddMemo(req)
+	memo, err := service.CreateMemo(req)
 	if err != nil {
 		util.Result(c, 500, "添加失败: "+err.Error(), nil)
 		return
 	}
 	util.Result(c, 200, "添加成功", memo)
+}
+
+// 获取
+func (h *MemoHandler) GetMemoList(c *gin.Context) {
+	userUUID := h.GetUserUUID(c)
+	var req dto.MemoListQueryDTO
+	h.Bind(c, &req)
+	memoList, err := service.GetMemoList(req, userUUID)
+	if err != nil {
+		util.Result(c, 500, "获取失败: "+err.Error(), nil)
+		return
+	}
+	util.Result(c, 200, "获取成功", memoList)
 }

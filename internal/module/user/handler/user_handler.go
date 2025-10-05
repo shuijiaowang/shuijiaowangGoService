@@ -69,10 +69,10 @@ func (h *AuthHandler) Login(c *gin.Context) {
 
 	// 返回token和用户信息
 	util.Result(c, 200, "登录成功", gin.H{
-		"id":        user.ID,
-		"username":  user.Username,
-		"user_uuid": user.UserUUID, // 可返回给前端用于展示或后续操作
-		"token":     token,
+		"id":       user.ID,
+		"username": user.Username,
+		"userUUID": user.UserUUID, // 可返回给前端用于展示或后续操作
+		"token":    token,
 	})
 }
 
